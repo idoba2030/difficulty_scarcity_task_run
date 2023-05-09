@@ -1,0 +1,141 @@
+
+    img {
+        height: 250px;
+        width: 200px;
+    }
+
+    p {
+        padding: 10px
+    }
+
+    img.keyboard {
+        height: 215px;
+        width: 517px;
+    }
+
+    img.fullscreen {
+        height: 150px;
+        width: 526px;
+    }
+
+    :root {
+        --top_middle: 0px;
+        --left_middle: 0px;
+
+        --top_a: 0px;
+        --left_a: 0px;
+        --top_b: 0px;
+        --left_b: 0px;
+        --top_c: 0px;
+        --left_c: 0px;
+
+
+        --top_d: 0px;
+        --right_d: 0px;
+        --top_e: 0px;
+        --right_e: 0px;
+        --top_f: 0px;
+        --right_f: 0px;
+
+        --bottom_g: 0px;
+        --right_g: 0px;
+        --bottom_h: 0px;
+        --right_h: 0px;
+        --bottom_i: 0px;
+        --right_i: 0px;
+
+
+        --bottom_j: 0px;
+        --left_j: 0px;
+        --bottom_k: 0px;
+        --left_k: 0px;
+        --bottom_l: 0px;
+        --left_l: 0px;
+
+       --upper1: 0px;
+       --upper2: 0px;
+       --upper3: 0px;
+
+       --lower1: 0px;
+       --lower2: 0px;
+       --lower3: 0px;
+
+        --left_card: 0px;
+        --right_card: 0px;
+        --top_card: 0px;
+
+        --top_reward: 0px;
+        --left_reward: 0px;
+
+        --top_surprise: 0px;
+        --left_surprise: 0px;
+    }
+
+    .surprise {
+        /* surprise will be in the middle of the screen in catch trials*/
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 50px;
+        width: 50px;
+    }
+
+    .fixation {
+        /* plus fixation will be in the middle of the screen*/
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15.8px;
+    }
+
+    .reward {
+
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 110px;
+        width: 100px;
+    }
+
+    .group {
+        height: 135px;
+        width: 487px;
+    }
+
+    .example {
+        height: 135px;
+        width: 217px;
+    }
+
+    .exampleDeck {
+        height: 192px;
+        width: 156px;
+        margin-right: 5px;
+    }
+
+    .exampleReward {
+        height: 210px;
+        width: 319px;
+    }
+
+    .start {
+        height: 192px;
+        width: 156px;
+    }
+
+
+    img.card_left {
+        position: fixed;
+        height: 192px;
+        width: 156px;
+        left: var(--left_card);
+        top: var(--top_card);
+    }
+
+    img.card_right {
+        position: fixed;
+        height: 192px;
+        width: 156px;
+        right: var(--right_card);
+        top: var(--top_card);
+    }
