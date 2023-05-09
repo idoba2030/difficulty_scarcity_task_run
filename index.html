@@ -3,31 +3,33 @@
 
 <head>
     <title>Game</title>
-    <!-- local run
+    
     <script src="lib/vendors/jspsych-7.1.2/jspsych.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-keyboard-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-button-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-preload.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-fullscreen.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-instructions.js"></script>
+    <script src="lib/vendors/jspsych-7.1.2/plugin-survey-likert.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-survey-text.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-survey-multi-choice.js"></script>
     <link rel="stylesheet" href="lib/vendors/jspsych-7.1.2/jspsych.css">
     <link href="./css/my_exp.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="lib/jspsych-7-pavlovia-2022.1.1.js"></script>-->
+    <script type="text/javascript" src="lib/jspsych-7-pavlovia-2022.1.1.js"></script>
 
-    
+    <!-- local run
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-html-button-response.js"></script>
     <script src="jspsych/dist/plugin-preload.js"></script>
     <script src="jspsych/dist/plugin-instructions.js"></script>
     <script src="jspsych/dist/plugin-survey-likert.js"></script>
+    <script src="jspsych/dist/plugin-survey-text.js"></script>
     <script src="jspsych/dist/plugin-survey-multi-choice.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
     <script src="jspsych/dist/plugin-html-slider-response.js"></script>
     <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
-    <link href="css/my_exp.css" rel="stylesheet" type="text/css"/>
+    <link href="css/my_exp.css" rel="stylesheet" type="text/css"/>-->
 </head>
 
 <body>
@@ -48,6 +50,9 @@
         root.style.setProperty('--top_surprise', window.screen.height / 2 + "px");
         root.style.setProperty('--left_surprise', window.screen.width / 2 + "px");
         var jsPsych = initJsPsych({
+            on_finish: function () {
+                download_csv(jsPsych.data.get().csv());
+            }
          });
         // capture info from Prolific
         var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
@@ -71,10 +76,35 @@
             fullscreen_mode: true,
             message: '<p>This experiment will be in fullscreen mode. <br> <b>Please make sure your browser is on 100% zoom, and you keyboard is on the English language.</b></p>'
                 }
+        
+        var id_num = {
+        type: jsPsychSurveyText,
+        questions: [
+            {prompt: 'Please enter the 5 <b>last</b> digits of your ID number'}
+        ]
+        }
+        var start_feedback = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: 'We really appreciate your honest and detailed feedback. You can not imagine how much it would mean for our research. Please take a couple of minutes to tell us <b>what you liked and disliked about the experiment.</b> <br> <br> Press any key to continue'
+        }
+        var get_feedback = {
+        type: jsPsychSurveyText,
+        questions: [
+            {prompt: 'Were the instructions for the cards game clear?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Were the instructions about the shapes clear?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Were you convinced that the key respones indeed have no meaning in terms of coin winning chances?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Could you explain your feelings throughout completing the task?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Do you think any graphical detail could be improved? <br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Do you think any technical detail could be improved? <br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Did you feel like you managed to learn which cards are better?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'What was your experience while choosing the shapes? How confusing was it?<br> <b>Please explain your answer</b>', required: true},
+            {prompt: 'Do you think you would act differently had real money was offered for every coin you earn?<br> <b>Please explain your answer</b>', required: true},
+        ]
+        }
         /*---------------------------------------------------- 
         Define images
         ------------------------------------------------------*/
-
+       
         var practice_deck_images = ['images/old/17.jpeg', 'images/old/18.jpg', 'images/old/19.jpg', 'images/old/20.jpg']
         var test_deck_images = ['images/old/1.jpg', 'images/old/2.jpg', 'images/old/3.jpg', 'images/old/4.jpg', 'images/old/5.jpg', 'images/old/6.jpg', 'images/old/7.jpg', 'images/old/8.jpeg'
             , 'images/old/9.jpg', 'images/old/10.jpg', 'images/old/11.jpg', 'images/old/12.jpg', 'images/old/13.jpg', 'images/old/14.jpg', 'images/old/15.jpg', 'images/old/16.jpg' ]
@@ -117,10 +147,10 @@
                 }
             },
             type: jsPsychInstructions,
-            pages: ["<p><b><u>Welcome to the card game</u></b></p>"
-                + "<p style='text-align:center'>Your winnings in this game will earn you additional payment bonus for the study."
-                + " If no extra money will be earned in the card game, you will still get £5/hr for completing this session of the study."
-                + " However, <b>you can gain up to an extra £1 based on winnings in the game.</b></p>",
+            pages: ["<p><b><u>Welcome to the card game</u></b></p>",
+                //+ "<p style='text-align:center'>Your winnings in this game will earn you additional payment bonus for the study."
+                //+ " If no extra money will be earned in the card game, you will still get ~£2.5 for completing this session of the study."
+                //+ " However, <b>you can gain up to an extra £0.75 based on winnings in the game.</b></p>",
                 "<p style='text-align:center'> We will now provide instructions regarding the card game. Please read them carefully. <br>"
                 + "Feel free to go back and forth between the screens.</p> "
                 , "<p style='text-align:left'>At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
@@ -135,7 +165,7 @@
                 + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br>"+
                 "<b>Please do your best to respond as fast as you can while trying to earn as many coins.</b></p>",
                 "<p><u>Please note that the winning chances of one card are unrelated to the winning chances of another card</u>.<br> Learning about one card tells you nothing about the other cards."
-                +"<br>A card's winning chances <b>does not change</b> throughout the game.</p>",
+                +"<br>A card's winning chances <b>do not change</b> throughout the game.</p>",
                 "<p style='text-align:center'><u>Two important things to remember:</u><br>"
                  + " 1.<b> Only the cards are related to your winning chances - </b> the location of the card and the response key you used to select it do not influence the chances of winning a coin.<br><br>"
                  + " 2. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>"],
@@ -151,14 +181,16 @@
             type: jsPsychInstructions,
             pages: [" <p style='text-align:center'>In the experiment you will play the card game that has been explained above."
                 +"<br>In addition, once every few steps, you will be presented with <b>two new shapes</b> as in the example below.</p>"
-                +"<br> <img class='example' src='images/group-shapes.png'><br>",
+                +"<p>You will only see each shape once.</p>"
+                +"<br> <img class='example' src='images/group_shapes.png'><br>",
                 "<p><br>You will need to select one of the shapes, but you will not see whether you won a coin or not."
-                +"<br> <img class='example' src='images/group-shapes.png'><br>"
-                +"For shape choices a <b>random lottery</b> (just like a coin flip) behind the scenes will determine whether you won a coin or not.</p>",
-                "<p>You will only see each shape once.</p>"
-                +"<img class='example' src='images/group-shapes.png'><br>"
-                +"Only at the end of each part of the experiment, you will be informed of the total extra amount you earned from shapes steps.",
-                "<p>As in the card game, in order the choose the left shape press <b>'S'</b> and in order the choose the right shape press <b>'K'</b>.</p>"],
+                +"<br> <img class='example' src='images/group_shapes_surprise.png'><br>"
+                +"Instead, you will see a gray box",
+                "<p>For shape choices a <b>random lottery</b> (just like a coin flip) behind the scenes will determine whether you won a coin or not.</p>"
+                +"<p>Only at the end of each part of the experiment, you will be informed of the total extra amount you earned from shapes steps.</p>"
+                +"<img class='example' src='images/group_shapes_surprise.png'><br>",
+                "<p>As in the card game, in order the choose the left shape press <b>'S'</b> and in order the choose the right shape press <b>'K'</b>.</p>"
+                +"<br> <img class='example' src='images/group_shapes.png'><br>"],
                 show_clickable_nav: true
         }
         var start_instructions_test = {
@@ -190,7 +222,7 @@
                 { prompt: "If one card frequantly leads to a coin, it means the other card will probably lead to a coin less often", name: 'value_independence', correct: 'False', options: Q6_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response key, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q7_options, required: true },
                 { prompt: "When will you know how many coins you earned from the shape lottery steps?", name: 'reward_announce', correct: "At the end of each part of the experiment", options: Q8_options, required: true },
-                { prompt: "The same shape can be presented multiple times throughout the game.", name: 'shapes_repeated', correct: 'False', options: Q9_options, required: true },
+                { prompt: "Each shape will be presented only one time throughout the game.", name: 'shapes_repeated', correct: 'True', options: Q9_options, required: true },
 
             ],
         };
@@ -219,10 +251,7 @@
         name: 'dominant_hand', 
         options: ['Right', 'Left', 'Both', "I don't know"], 
         required: true
-        }],
-        on_finish:function () {
-        document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>')
-        }
+        }]
         };
 
     var frustration = {
@@ -234,7 +263,7 @@
         ,
     questions: [
     {
-      prompt: "Please rate how frustrated you currently feel about the task you just completed.", 
+      prompt: "Please rate how frustrated you currently feel about part of the task you just completed.", 
       labels: [
         "Not at all frustrated", 
         "Slightly frustrated", 
@@ -469,21 +498,22 @@
         var timeline = [];
         
         //init connection with pavlovia.org
-        /*var pavlovia_init = {
+        var pavlovia_init = {
 			type: jsPsychPavlovia,
 			command: "init"
 
         };
-        timeline.push(pavlovia_init);*/
+        timeline.push(pavlovia_init);
         var preload = {
         type: jsPsychPreload,
         images: [practice_deck_images, test_deck_images, reward_images, surprise,catch_trials_images, practice_catch_trials_images]
         };
         timeline.push(preload)
         timeline.push(enter_fullscreen)
+        timeline.push(id_num)
         var start_practice_only_cards = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: '<div>We will now start a few practice trials. <br> Please be ready with your fingers on <b>"S"</b> and <b>"K"</b>. <br><br> <b> Press any key to begin</b></div>',
+            stimulus: "<div>We will now start a few practice trials. <br> Please be ready with your fingers on <b>'S'</b> and <b>'K'</b>. <br><br> <b> Press any key to begin</b></div>",
             post_trial_gap: 1000,
             on_finish: function () { 
                 practice_type=1;
@@ -492,7 +522,7 @@
         }
         var start_practice_cards = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: '<div>We will now start a few practice trials with both the cards and the shapes. <br> Please be ready with your fingers on <b>"S"</b> and <b>"K"</b>. <br><br> <b> Press any key to begin</b></div>',
+            stimulus: "<div>We will now start a few practice trials with both the cards and the shapes. <br> Please be ready with your fingers on <b>'S'</b> and <b>'K'</b>. <br><br> <b> Press any key to begin</b></div>",
             post_trial_gap: 1000,
             on_finish: function () { //trial_by_trial condition for practice
                 practice_type=2;
@@ -572,7 +602,7 @@
                     catch_trials_number=0;
                 }
                 return '<p><b><u> Part ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
-                    + '<p style="text-align: left">Use the LEFT or RIGHT response keys ("S" or "K", in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
+                    + "<p style='text-align: left'>Use the LEFT or RIGHT response keys ('S' or 'K', in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>"
                     + '<p style="text-align: left"><b>Remember that:</b> <br> 1) Only the cards (not the response key that was used to select them) predict an outcome <br> 2) The chance that each card will give you money has nothing to do with the other cards </p>'
                     + '<p><b>Press any key to start</b></p>'
                     + '<img class=start src="' + images_for_block_start()[0] + '">  ' + '<img class=start src="' + images_for_block_start()[1] + '">    ' + '<img class=start src="' + images_for_block_start()[2]
@@ -687,14 +717,14 @@
             type: jsPsychHtmlKeyboardResponse,
             stimulus: function () {
     
-                finish_block_string = '<p>Good job!</p>' + '<p style="text-align: left"><br> Test block ' + (block + 1) + ' out of ' + (blocks) + ' is over.'
-                finish_block_string += ' You earned ' + sum_reward_test_trials + ' coins on cards trials and ' + sum_reward_catch_trials + ' coins on shapes trials.<br>'
+                finish_block_string = '<p><b>Good job!</b></p>' + '<p style="text-align: left"><br> Test block <b>' + (block + 1) + ' out of ' + (blocks) + '</b> is over.'
+                finish_block_string += ' You earned <b> ' + sum_reward_test_trials + '</b> coins on cards trials and <b>' + sum_reward_catch_trials + '</b> coins on shapes trials.<br>'
                 if (block != 3) {
                     finish_block_string += 'You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
                 }
-                // else {
-                //     finish_block_string += 'Thank you for your participation!</p><p> <br><br><br><b>Press SPACE to exit</b>  </p>'
-                // }
+                else {
+                     finish_block_string += 'You finished the task!</p><p> <br><br><br><b>Press SPACE to continue</b></p>'
+                 }
                 return finish_block_string
             },
             post_trial_gap: 1000,
@@ -719,7 +749,7 @@
                     document.querySelector('#cursor-toggle').remove()
             },
             stimulus: function () {
-                return "<p><b>Congratulations!</b> <br><br> You successfully finished the task!<br>"
+                return "<p><b>Congratulations!</b> <br><br> You successfully finished the task!<br> <b>Please send the code '2G47HT' to the experimenter to receive your credit.</b></p>"
             },
             choices:["Click here to return to Prolific and complete the study"]
             , button_html: ['<a href=https://app.prolific.co/submissions/complete?cc=XXXXXXX target="_blank"> %choice%</a>']
@@ -731,12 +761,12 @@
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 3  //every trial takes 8.15 sec, 6 trials = 49 sec
+            repetitions: 1  //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var demo_procedure_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 3 //every trial takes 8.15 sec, 6 trials = 49 sec
+            repetitions: 1 //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var instructions_loop = {
@@ -752,7 +782,7 @@
         }
         var test_procedure_cards = {
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 5 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
+            repetitions: 1 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block,frustration],
@@ -760,19 +790,19 @@
         }
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp, test_blocks,dominant_hand,finish_learning]
+            timeline: [instructions_loop, start_exp, test_blocks,dominant_hand,start_feedback,get_feedback,finish_learning]
             //timeline: [start_exp, test_blocks,finish_learning]
 
 
         }
         timeline.push(full_procedure_cards)
     /* finish connection with pavlovia.org */
-    /*var pavlovia_finish = {
+    var pavlovia_finish = {
         type: jsPsychPavlovia,
         command: "finish",
         participantId: subject_id
         };
-    timeline.push(pavlovia_finish); */
+    timeline.push(pavlovia_finish);
     jsPsych.run(timeline);
     </script>
 
