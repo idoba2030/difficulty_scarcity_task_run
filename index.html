@@ -80,12 +80,12 @@
         var id_num = {
         type: jsPsychSurveyText,
         questions: [
-            {prompt: 'Please enter the 5 <b>last</b> digits of your ID number'}
+            {prompt: 'Please enter the 3 <b>last</b> digits of your ID number'}
         ]
         }
         var start_feedback = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: 'We really appreciate your honest and detailed feedback. You can not imagine how much it would mean for our research. Please take a couple of minutes to tell us <b>what you liked and disliked about the experiment.</b> <br> <br> Press any key to continue'
+            stimulus: 'Please take a couple of minutes to tell us <b>what you liked and disliked about the experiment.</b> We really appreciate your honest and detailed feedback. You can not imagine how much it would mean for our research. <br> <br> Press any key to continue'
         }
         var get_feedback = {
         type: jsPsychSurveyText,
@@ -99,6 +99,53 @@
             {prompt: 'Did you feel like you managed to learn which cards are better?<br> <b>Please explain your answer</b>', required: true},
             {prompt: 'What was your experience while choosing the shapes? How confusing was it?<br> <b>Please explain your answer</b>', required: true},
             {prompt: 'Do you think you would act differently had real money was offered for every coin you earn?<br> <b>Please explain your answer</b>', required: true},
+        ]
+        }
+        var labels_pqb= [
+        "Strongly Disagree", 
+        "Disagree", 
+        "Neutral", 
+        "Agree", 
+        "Strongly Agree"
+      ]
+        var start_pqb = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: 'We will now ask you to answer a questionnaire. Please be sure that all data is saved anonymously</b> <br> <br> <b>Press any key to continue</b>'
+        }
+        var pqb = {
+        type: jsPsychSurveyLikert,
+        questions: [
+            {prompt: "Do you sometimes feel that people are talking about you?",labels: labels_pqb, required: true},
+            {prompt: "Do you sometimes feel that other people are watching you?",labels: labels_pqb, required: true},
+            {prompt: "When shopping, do you get the feeling that other people are taking notice of you?",labels: labels_pqb, required: true},
+            {prompt: "I often feel that others have it in for me. (Others trying to make things difficult for me.)",labels: labels_pqb, required: true},
+            {prompt: 'Do you often have to keep an eye out to stop people from taking advantage of you?',labels: labels_pqb, required: true},
+            {prompt: 'Do you feel that you cannot get “close” to people?',labels: labels_pqb, required: true},
+            {prompt: 'I find it hard to be emotionally close to other people.',labels: labels_pqb, required: true},
+            {prompt: 'Do you feel that there is no one you are really close to outside of your immediate family, or people you can confide in or talk to about personal problems?',labels: labels_pqb, required: true},
+            {prompt: 'I tend to keep my feelings to myself.',labels: labels_pqb, required: true},
+            {prompt: 'I rarely laugh and smile.',labels: labels_pqb, required: true},
+            {prompt: 'I am not good at expressing my true feelings by the way I talk and look.',labels: labels_pqb, required: true},
+            {prompt: 'Other people see me as slightly eccentric (odd).',labels: labels_pqb, required: true},
+            {prompt: 'I am an odd, unusual person.',labels: labels_pqb, required: true},
+            {prompt: 'I have some eccentric (odd) habits.',labels: labels_pqb, required: true},
+            {prompt: 'People sometimes comment on my unusual mannerisms and habits.',labels: labels_pqb, required: true},
+            {prompt: 'Do you often feel nervous when you are in a group of unfamiliar people?',labels: labels_pqb, required: true},
+            {prompt: 'I get anxious when meeting people for the first time.',labels: labels_pqb, required: true},
+            {prompt: 'I feel very uncomfortable in social situations involving unfamiliar people.',labels: labels_pqb, required: true},
+            {prompt: 'I sometimes avoid going to places where there will be many people because I will get anxious.',labels: labels_pqb, required: true},
+            {prompt: 'Do you believe in telepathy (mind-reading)?',labels: labels_pqb, required: true},
+            {prompt: 'Do you believe in clairvoyance (psychic forces, fortune telling)?',labels: labels_pqb, required: true},
+            {prompt: 'Have you had experiences with astrology, seeing the future, UFO’s, ESP, or a sixth sense?',labels: labels_pqb, required: true},
+            {prompt: 'Have you ever felt that you are communicating with another person telepathically (by mind-reading)?',labels: labels_pqb, required: true},
+            {prompt: 'I sometimes jump quickly from one topic to another when speaking.',labels: labels_pqb, required: true},
+            {prompt: 'Do you tend to wander off the topic when having a conversation?',labels: labels_pqb, required: true},
+            {prompt: 'I often ramble on too much when speaking.',labels: labels_pqb, required: true},
+            {prompt: 'I sometimes forget what I am trying to say.',labels: labels_pqb, required: true},
+            {prompt: 'I often hear a voice speaking my thoughts aloud.',labels: labels_pqb, required: true},
+            {prompt: 'When you look at a person or yourself in a mirror, have you ever seen the face change right before your eyes?',labels: labels_pqb, required: true},
+            {prompt: 'Are your thoughts sometimes so strong that you can almost hear them?',labels: labels_pqb, required: true},
+            {prompt: 'Do everyday things seem unusually large or small?',labels: labels_pqb, required: true}
         ]
         }
         /*---------------------------------------------------- 
@@ -497,7 +544,7 @@
         ------------------------------------------------------*/
         var timeline = [];
         
-        //init connection with pavlovia.org
+        /*init connection with pavlovia.org*/
         var pavlovia_init = {
 			type: jsPsychPavlovia,
 			command: "init"
@@ -790,7 +837,7 @@
         }
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp, test_blocks,dominant_hand,start_feedback,get_feedback,finish_learning]
+            timeline: [instructions_loop, start_exp, test_blocks,dominant_hand,start_pqb,pqb,start_feedback,get_feedback,finish_learning]
             //timeline: [start_exp, test_blocks,finish_learning]
 
 
