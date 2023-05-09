@@ -1,5 +1,5 @@
 # difficulty_scarcity_task
-Multi-armed bandit task with 2 out of 4 cards each trial. Two pairs of cards can be offered. 
+Multi-armed bandit task with 2 out of 4 cards each trial. On each trial, one out of two pairs of cards can be offered. 
 
 Key/location is irrelevant, only card identity. We added also shape trials in which no outcome is shown, and participants need to pick.
 
