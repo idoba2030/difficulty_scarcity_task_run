@@ -74,7 +74,7 @@
         var enter_fullscreen = {
             type: jsPsychFullscreen,
             fullscreen_mode: true,
-            message: '<p>This experiment will be in fullscreen mode. <br> <b>Please make sure your browser is on 100% zoom, and you keyboard is on the English language.</b></p>'
+            message: '<p>This experiment will be in fullscreen mode. <br> <b>Please make sure your browser is on 100% zoom, and your keyboard is on the English language.</b></p>'
                 }
         
         var id_num = {
@@ -151,7 +151,7 @@
         /*---------------------------------------------------- 
         Define images
         ------------------------------------------------------*/
-       
+        var instructions_images = ['images/group_shapes.png','images/group_shapes_surprise.png','images/reward_example1.png']
         var practice_deck_images = ['images/old/17.jpeg', 'images/old/18.jpg', 'images/old/19.jpg', 'images/old/20.jpg']
         var test_deck_images = ['images/old/1.jpg', 'images/old/2.jpg', 'images/old/3.jpg', 'images/old/4.jpg', 'images/old/5.jpg', 'images/old/6.jpg', 'images/old/7.jpg', 'images/old/8.jpeg'
             , 'images/old/9.jpg', 'images/old/10.jpg', 'images/old/11.jpg', 'images/old/12.jpg', 'images/old/13.jpg', 'images/old/14.jpg', 'images/old/15.jpg', 'images/old/16.jpg' ]
@@ -553,7 +553,7 @@
         timeline.push(pavlovia_init);
         var preload = {
         type: jsPsychPreload,
-        images: [practice_deck_images, test_deck_images, reward_images, surprise,catch_trials_images, practice_catch_trials_images]
+        images: [instructions_images,practice_deck_images, test_deck_images, reward_images, surprise,catch_trials_images, practice_catch_trials_images]
         };
         timeline.push(preload)
         timeline.push(enter_fullscreen)
