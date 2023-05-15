@@ -544,13 +544,13 @@
         ------------------------------------------------------*/
         var timeline = [];
         
-        /*init connection with pavlovia.org*/
+        /*init connection with pavlovia.org
         var pavlovia_init = {
 			type: jsPsychPavlovia,
 			command: "init"
 
         };
-        timeline.push(pavlovia_init);
+        timeline.push(pavlovia_init);*/
         var preload = {
         type: jsPsychPreload,
         images: [instructions_images,practice_deck_images, test_deck_images, reward_images, surprise,catch_trials_images, practice_catch_trials_images]
@@ -843,14 +843,14 @@
 
         }
         timeline.push(full_procedure_cards)
-    /* finish connection with pavlovia.org */
+    /* finish connection with pavlovia.org 
     var pavlovia_finish = {
         type: jsPsychPavlovia,
         command: "finish",
         participantId: subject_id
         };
     timeline.push(pavlovia_finish);
-    jsPsych.run(timeline);
+    jsPsych.run(timeline);*/
     </script>
 
 </body>
