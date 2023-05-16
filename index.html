@@ -808,12 +808,12 @@
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 1  //every trial takes 8.15 sec, 6 trials = 49 sec
+            repetitions: 6  //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var demo_procedure_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 1 //every trial takes 8.15 sec, 6 trials = 49 sec
+            repetitions: 6 //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var instructions_loop = {
@@ -829,11 +829,11 @@
         }
         var test_procedure_cards = {
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 1 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
+            repetitions: 6 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block,frustration],
-            repetitions: 1
+            repetitions: 3
         }
 
         var full_procedure_cards = {
